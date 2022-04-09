@@ -16,8 +16,8 @@ const WeatherItem = ({title, value, unit}) => {
         </View>
     )
 }
-//timezone, lat, lon
-const DateTime = ({current, timezone, lat, lon}) => {
+
+const DateTime = ({current, timezone, lat, lon, city}) => {
     //console.log({timezone})
     const [date, setDate] = useState('')
     const [time, setTime] = useState('')
@@ -42,12 +42,10 @@ const DateTime = ({current, timezone, lat, lon}) => {
     return (
         <View style={style.container}>
             <View>
-                <View>
-                    <Text style={style.heading}>{time}</Text>
-                </View>
-                <View>
-                    <Text style={style.subHeading}>{date}</Text>
-                </View>
+                <Text  style={style.timezone}> {city}</Text>
+                <Text  style={style.temp}> {current? Math.round(current.temp): ""}&#176;C</Text>
+                <Text  style={style.description}> {current? current.weather[0].description: ""}</Text>
+
                 <View style={style.weatherItemContainer}>
                     <WeatherItem title="Độ ẩm" value={current? current.humidity: ""} unit="%"/>
                     <WeatherItem title="Áp suất" value={current? current.pressure: ""} unit="hPA"/>
@@ -56,10 +54,15 @@ const DateTime = ({current, timezone, lat, lon}) => {
                     <WeatherItem title="Tầm nhìn" value={current? current.visibility/1000: ""} unit="km"/>
                 </View>
             </View>
-            <View  style={style.rightAlign}>
-                <Text  style={style.timezone}> {timezone}</Text>
-                <Text  style={style.latlong}> {lat} N {lon} E</Text>
-            </View>
+            {/*<View  style={style.rightAlign}>
+                <View>
+                    <Text style={style.time}>{time}</Text>
+                </View>
+                <View>
+                    <Text style={style.date}>{date}</Text>
+                </View>
+                
+            </View>*/}
             
         </View>
     )
@@ -68,30 +71,37 @@ const style = StyleSheet.create({
     container: {
         flex: 1.5,
         flexDirection:"row",
-        justifyContent:"space-between",
+        justifyContent:'center',
         padding: 20,
-        margin: 20
+        margin: 20,
+        textAlign: 'center'
     },
-    heading: {
+    /*time: {
         fontSize: 40,
-        color:"red",
+        color:"white",
         fontWeight: "100"
     },
-    subHeading: {
-        fontSize: 25,
-        fontWeight: "200"
+    date: {
+        fontSize: 20,
+        fontWeight: '200',
+        color: '#eee'
     },
     rightAlign :{
-        textAlign:'right',
+        textAlign:'center',
         margin: 20
-    },
+    },*/
     timezone: {
-        fontSize: 20,
-
+        fontSize: 40,
+        textAlign: 'center',
+        color: '#eee'
     },
-    latlong: {
-        fontSize:16,
-        fontWeight: '400'
+    temp: {
+        fontSize: 70,
+        color: '#eee'
+    },
+    description: {
+        fontSize: 20,
+        color: '#eee'
     },
     weatherItemContainer: {
         backgroundColor: 'red',
@@ -105,7 +115,7 @@ const style = StyleSheet.create({
     },
     weatherItemTitle: {
         color:'#eee',
-        fontSize:14,
+        fontSize:16,
         fontWeight: '100'
     },
     weatherItemValue: {

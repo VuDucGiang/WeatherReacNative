@@ -15,7 +15,6 @@ const WeatherScroll = ({weatherData}) => {
 
 const CurrentTempEl = ({data}) => {
     if(data && data.weather) {
-        //console.log(data.weather[0].icon)
         const img = {uri:'https://openweathermap.org/img/wn/' + data.weather[0].icon + '@4x.png'}
         return (
             <View style={style.currentTempContainer}>

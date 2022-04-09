@@ -3,12 +3,14 @@ import React, {useEffect, useState}from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import * as Location from 'expo-location';
 
+
 import DateTime from './components/DateTime'
 import WeatherScroll from './components/WeatherScroll'
 const API_KEY ='49cc8c821cd2aff9af04c9f98c36eb74';
-const img = require('./assets/image.png')
+const bg = require('./assets/bg.png')
 export default function App() {
   const [data, setData] = useState({});
+  const [location, setLocation] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -24,12 +26,19 @@ export default function App() {
     })();
   }, [])
 
+
   const fetchDataFromApi = (latitude, longitude) => {
     if(latitude && longitude) {
-      fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
+      fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&lang=en&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
 
       console.log(data)
       setData(data)
+      })
+
+      fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=vi`).then(res => res.json()).then(location => {
+
+      console.log(location.city)
+      setLocation(location)
       })
     }
     
@@ -37,8 +46,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={img} style={styles.image} >
-        <DateTime current={data.current} timezone={data.timezone} lat={data.lat} lon={data.lon}/>
+      <ImageBackground source={bg} style={styles.background} >
+        <DateTime current={data.current} timezone={data.timezone} lat={data.lat} lon={data.lon} city = {location.city}/>
         <WeatherScroll weatherData={data.daily}/>
       </ImageBackground>
     </View>
@@ -49,7 +58,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  image:{
+  background:{
     flex:1, 
     resizeMode:"cover", 
     justifyContent:"center"

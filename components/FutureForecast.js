@@ -18,8 +18,6 @@ const FutureForecast = ({data}) => {
                 <View/>
             }
           
-            
-
         </View>
     )
 }
