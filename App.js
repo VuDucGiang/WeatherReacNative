@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState}from 'react';
-import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, ScrollView } from 'react-native';
 import * as Location from 'expo-location';
 
 
-import DateTime from './components/DateTime'
+import TempLocation from './components/TempLocation'
 import WeatherScroll from './components/WeatherScroll'
+import DetailWeatherCurrent from './components/DetailWeatherCurrent';
 const API_KEY ='49cc8c821cd2aff9af04c9f98c36eb74';
 const bg = require('./assets/bg.png')
 export default function App() {
@@ -29,7 +30,7 @@ export default function App() {
 
   const fetchDataFromApi = (latitude, longitude) => {
     if(latitude && longitude) {
-      fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&lang=en&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
+      fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&lang=vi&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
 
       console.log(data)
       setData(data)
@@ -45,22 +46,27 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <ImageBackground source={bg} style={styles.background} >
-        <DateTime current={data.current} timezone={data.timezone} lat={data.lat} lon={data.lon} city = {location.city}/>
+    <ScrollView horizontal = {false} style={styles.container}>
+      
+        <TempLocation current={data.current} timezone={data.timezone} lat={data.lat} lon={data.lon} city = {location.city}/>
         <WeatherScroll weatherData={data.daily}/>
-      </ImageBackground>
-    </View>
+      {/*
+      <ImageBackground source={bg} style={styles.background} >
+      </ImageBackground>*/}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#9AC1D9'
   },
-  background:{
+  /*background:{
     flex:1, 
-    resizeMode:"cover", 
-    justifyContent:"center"
-  }
+    resizeMode:'repeat', 
+    justifyContent:"center",
+    backgroundColor:"red"
+  }*/
 });

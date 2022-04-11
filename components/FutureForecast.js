@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     day: {
         fontSize: 20,
         color:"white",
-        backgroundColor: "#3c3c44",
+        backgroundColor: '#083359',
         padding: 10,
         textAlign:"center",
         borderRadius: 50,

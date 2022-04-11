@@ -6,7 +6,7 @@ import moment from 'moment-timezone';
 import FutureForecast from './FutureForecast';
 const WeatherScroll = ({weatherData}) => {
     return (
-        <ScrollView horizontal = {true} style={style.scrollView}>
+        <ScrollView horizontal = {true} showsHorizontalScrollIndicator={false} style={style.scrollView}>
             <CurrentTempEl data = {weatherData && weatherData.length > 0 ? weatherData[0] : {}}/>
             <FutureForecast data = {weatherData}/>
         </ScrollView>
@@ -38,8 +38,8 @@ const style = StyleSheet.create({
         height: 150
     },
     scrollView: {
-        flex: 0.4,
-        backgroundColor: '#18181bcc',
+        flex: 0.5,
+        backgroundColor: '#5B9ED9',
         padding: 30
     },
     currentTempContainer: {
@@ -55,7 +55,7 @@ const style = StyleSheet.create({
     day: {
         fontSize: 20,
         color: 'white',
-        backgroundColor:'#00000033',
+        backgroundColor:'#083359',
         padding: 10,
         textAlign: 'center',
         borderRadius: 50,
