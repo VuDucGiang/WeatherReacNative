@@ -46,14 +46,14 @@ export default function App() {
   }
 
   return (
-    <ScrollView horizontal = {false} style={styles.container}>
-      
-        <TempLocation current={data.current} timezone={data.timezone} lat={data.lat} lon={data.lon} city = {location.city}/>
-        <WeatherScroll weatherData={data.daily}/>
-      {/*
-      <ImageBackground source={bg} style={styles.background} >
-      </ImageBackground>*/}
-    </ScrollView>
+      <ScrollView horizontal = {false} style={styles.container}>
+        
+          <TempLocation current={data.current} timezone={data.timezone} lat={data.lat} lon={data.lon} city = {location.city}/>
+          <WeatherScroll weatherData={data.daily}/>
+        {/*
+        <ImageBackground source={bg} style={styles.background} >
+        </ImageBackground>*/}
+      </ScrollView>
   );
 }
 

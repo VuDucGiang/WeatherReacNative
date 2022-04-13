@@ -44,8 +44,6 @@ const TempLocation = ({current, timezone, lat, lon, city}) => {
             <View>
                 
                 <Text  style={style.timezone}> {city}</Text>
-    
-                
                 <Text  style={style.temp}> {current? Math.round(current.temp): ""}&#176;</Text>
                 <Text  style={style.description}> {current? current.weather[0].description: ""}</Text>
                 <Text style={style.date}>{date}</Text>

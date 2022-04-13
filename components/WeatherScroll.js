@@ -39,12 +39,12 @@ const style = StyleSheet.create({
     },
     scrollView: {
         flex: 0.5,
-        backgroundColor: '#5B9ED9',
+        //backgroundColor: '#5B9ED9',
         padding: 30
     },
     currentTempContainer: {
         flexDirection: 'row',
-        backgroundColor: '#00000033',
+        backgroundColor: '#5B9ED9',
         justifyContent:'center',
         alignItems: 'center',
         borderRadius: 10,
@@ -55,7 +55,7 @@ const style = StyleSheet.create({
     day: {
         fontSize: 20,
         color: 'white',
-        backgroundColor:'#083359',
+        backgroundColor:'#0C2659',
         padding: 10,
         textAlign: 'center',
         borderRadius: 50,

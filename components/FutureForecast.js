@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     futureForecastItemContainer: {
         flex:1,
         justifyContent: 'center',
-        backgroundColor: '#00000033',
+        backgroundColor: '#5B9ED9',
         borderRadius:10,
         borderColor:"#eee",
         borderWidth:1,
