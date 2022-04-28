@@ -18,7 +18,6 @@ const WeatherItem = ({title, value, unit}) => {
 }
 
 const TempLocation = ({current, timezone, lat, lon, city}) => {
-    //console.log({timezone})
     const [date, setDate] = useState('')
     const [time, setTime] = useState('')
 
@@ -32,7 +31,7 @@ const TempLocation = ({current, timezone, lat, lon, city}) => {
             const hoursIn12HrFormat = hour >= 13 ? hour %12: hour
             const minutes = time.getMinutes();
             const ampm = hour >=12 ? 'pm' : 'am'
-        
+    
             setTime((hoursIn12HrFormat < 10? '0'+hoursIn12HrFormat : hoursIn12HrFormat) + ':' + (minutes < 10? '0'+minutes: minutes) +ampm) 
         
             setDate(days[day] + ', ' + date+ ' ' + months[month]) 
@@ -45,7 +44,7 @@ const TempLocation = ({current, timezone, lat, lon, city}) => {
                 
                 <Text  style={style.timezone}> {city}</Text>
                 <Text  style={style.temp}> {current? Math.round(current.temp): ""}&#176;</Text>
-                <Text  style={style.description}> {current? current.weather[0].description: ""}</Text>
+                {/*<Text  style={style.description}> {current? current.weather[0].description: ""}</Text>*/}
                 <Text style={style.date}>{date}</Text>
 
                 <View style={style.weatherItemContainer}>
@@ -60,15 +59,6 @@ const TempLocation = ({current, timezone, lat, lon, city}) => {
                     <WeatherItem title="Tầm nhìn" value={current? current.visibility/1000: ""} unit="km"/>
                 </View>
             </View>
-            {/*<View  style={style.rightAlign}>
-                <View>
-                    <Text style={style.time}>{time}</Text>
-                </View>
-                <View>
-                    <Text style={style.date}>{date}</Text>
-                </View>
-                
-            </View>*/}
             
         </View>
     )
@@ -81,15 +71,11 @@ const style = StyleSheet.create({
         textAlign: 'center',
     },
     date: {
-        fontSize: 15,
-        fontWeight: '100',
+        fontSize: 20,
+        fontWeight: '200',
         textAlign: 'center',
         color: '#eee'
     },
-    /*rightAlign :{
-        textAlign:'center',
-        margin: 20
-    },*/
     timezone: {
         fontSize: 40,
         textAlign: 'center',

@@ -48,8 +48,8 @@ const style = StyleSheet.create({
         justifyContent:'center',
         alignItems: 'center',
         borderRadius: 10,
-        borderColor: '#eee',
-        borderWidth: 1,
+        //borderColor: '#eee',
+        //borderWidth: 1,
         padding: 15
     },
     day: {

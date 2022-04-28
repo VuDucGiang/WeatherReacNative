@@ -4,7 +4,6 @@ import moment from 'moment-timezone'
 const FutureForecast = ({data}) => {
     return (
         <View style={{flexDirection: 'row'}}>
-
             {
                 data && data.length > 0 ? 
 
@@ -17,7 +16,6 @@ const FutureForecast = ({data}) => {
 
                 <View/>
             }
-          
         </View>
     )
 }
@@ -49,8 +47,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#5B9ED9',
         borderRadius:10,
-        borderColor:"#eee",
-        borderWidth:1,
+        //borderWidth:1,
         padding: 20,
         marginLeft: 10
     }, 

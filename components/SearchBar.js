@@ -2,7 +2,7 @@ import React, { useState  } from 'react'
 import { View, TextInput, StyleSheet, Dimensions } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons'; 
 
-export default function SearchBar({ fetchWeatherData }) {
+export default function SearchBar({ fetchLocationFromCity }) {
 
     const [cityName, setCityName] = useState('');
 
@@ -13,7 +13,7 @@ export default function SearchBar({ fetchWeatherData }) {
                 value={cityName}
                 onChangeText={(text) => setCityName(text)}
             />
-            <EvilIcons name="search" size={28} color="black"  onPress={() => fetchWeatherData(cityName)}/>
+            <EvilIcons name="search" size={28} color="black"  onPress={() => fetchLocationFromCity(cityName)}/>
         </View>
     )
 }

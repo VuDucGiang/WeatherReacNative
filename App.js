@@ -10,9 +10,8 @@ import SearchBar from './components/SearchBar';
 const API_KEY ='49cc8c821cd2aff9af04c9f98c36eb74';
 const bg = require('./assets/bg.png')
 export default function App() {
-  const [data, setData] = useState({});
-  const [location, setLocation] = useState({});
-  const [loaded, setLoaded] = useState(true);
+const [data, setData] = useState({});
+const [location, setLocation] = useState({});
 
   useEffect(() => {
     (async () => {
@@ -25,41 +24,42 @@ export default function App() {
       let location = await Location.getCurrentPositionAsync({});
 
       fetchDataFromApi(location.coords.latitude, location.coords.longitude);
+      fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${location.coords.latitude}&longitude=${location.coords.longitude}&localityLanguage=vi`).then(
+      res => res.json()).then(location => {
+
+      console.log(location.city)
+      setLocation(location)
+      })
+
     })();
   }, [])
 
-  async function fetchWeatherData(cityName) {
-    setLoaded(false);
-    const API = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${API_KEY}`
+  async function fetchLocationFromCity(cityName) {
+    const API = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&lang=vi&units=metric&appid=${API_KEY}`
     try {
         const response = await fetch(API);
         if(response.status == 200) {
             const location = await response.json();
+            console.log(location);
+            setLocation(location)
             fetchDataFromApi(location.coord.lat, location.coord.lon);
         } else {
             setLocation(null);
         }
-        setLoaded(true);
         
     } catch (error) {
         console.log(error);
     }
   }
-  if(!loaded) {
-    return (
-        <View >
-            <Text>Không load được</Text>
-        </View>
 
-    )
-  } else if(location === null) {
+  if(location === null) {
     return (
         <View style={styles.container}>
-            <SearchBar fetchWeatherData={fetchWeatherData}/>
+            <SearchBar fetchLocationFromCity={fetchLocationFromCity}/>
             <Text style={styles.primaryText}>City Not Found! Try Different City</Text>
         </View>
     )
-    } 
+  } 
 
 
   const fetchDataFromApi = (latitude, longitude) => {
@@ -69,12 +69,6 @@ export default function App() {
       console.log(data)
       setData(data)
       })
-
-      fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=vi`).then(res => res.json()).then(location => {
-
-      console.log(location.city)
-      setLocation(location)
-      })
     }
     
   }
@@ -82,8 +76,8 @@ export default function App() {
   return (
     
       <ScrollView horizontal = {false} style={styles.container}>
-          <SearchBar fetchWeatherData={fetchWeatherData} />
-          <TempLocation current={data.current} timezone={data.timezone} lat={data.lat} lon={data.lon} city = {location.city}/>
+          <SearchBar fetchLocationFromCity={fetchLocationFromCity} />
+          <TempLocation current={data.current} timezone={data.timezone} lat={data.lat} lon={data.lon} city = {location.city?location.city:location.name}/>
           <WeatherScroll weatherData={data.daily}/>
         {/*
         <ImageBackground source={bg} style={styles.background} >
