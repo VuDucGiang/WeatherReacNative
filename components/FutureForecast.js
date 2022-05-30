@@ -27,8 +27,8 @@ const FutureForecastItem = ({forecastItem}) => {
         <View  style={styles.futureForecastItemContainer}>
             <Text  style={styles.day}>{moment(forecastItem.dt * 1000).format('ddd')}</Text>
             <Image source={img} style={styles.image} />
-            <Text  style={styles.temp}>Night {forecastItem.temp.night}&#176;C</Text>
-            <Text  style={styles.temp}>Day {forecastItem.temp.day}&#176;C</Text>
+            <Text  style={styles.temp}>Min {forecastItem.temp.min}&#176;C</Text>
+            <Text  style={styles.temp}>Max {forecastItem.temp.max}&#176;C</Text>
 
         </View>
     )
@@ -58,13 +58,13 @@ const styles = StyleSheet.create({
         padding: 10,
         textAlign:"center",
         borderRadius: 50,
-        fontWeight: "200",
+        fontWeight: "300",
         marginBottom: 15
     },   
     temp: {
         fontSize: 14,
         color:"white",
-        fontWeight:"100",
+        fontWeight:"300",
         textAlign:"center"
     },
 })

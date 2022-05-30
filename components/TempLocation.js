@@ -44,14 +44,12 @@ const TempLocation = ({current, timezone, lat, lon, city}) => {
                 
                 <Text  style={style.timezone}> {city}</Text>
                 <Text  style={style.temp}> {current? Math.round(current.temp): ""}&#176;</Text>
-                {/*<Text  style={style.description}> {current? current.weather[0].description: ""}</Text>*/}
                 <Text style={style.date}>{date}</Text>
 
                 <View style={style.weatherItemContainer}>
                     <WeatherItem title="Cảm nhận" value={current? Math.round(current.feels_like): ""} unit = '&#176;C'/>
-                    {/*<Image style = {style.iconPressure} source={require('../assets/pressure.png')}/>*/}
                     <WeatherItem title="Độ ẩm" value={current? current.humidity: ""} unit="%"/>
-                    <WeatherItem title="Chỉ số UV" value={current? current.uvi: ""} unit="%"/>
+                    <WeatherItem title="Chỉ số UV" value={current? current.uvi: ""} unit=""/>
                     <WeatherItem title="Gió" value={current? current.wind_speed: ""} unit="m/s"/>
                     <WeatherItem title="Áp suất" value={current? current.pressure: ""} unit="hPA"/>
                     <WeatherItem title="Mặt trời mọc" value={current? moment.tz(current.sunrise * 1000, timezone).format('HH:mm'): ""} unit="am"/>
@@ -72,7 +70,7 @@ const style = StyleSheet.create({
     },
     date: {
         fontSize: 20,
-        fontWeight: '200',
+        fontWeight: '300',
         textAlign: 'center',
         color: '#eee'
     },

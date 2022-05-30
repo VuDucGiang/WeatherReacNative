@@ -22,8 +22,8 @@ const CurrentTempEl = ({data}) => {
 
                 <View style={style.otherContainer}>
                     <Text style={style.day}>{moment(data.dt * 1000).format('dddd')}</Text>
-                    <Text style={style.temp}>Night {data.temp.night}&#176;C</Text>
-                    <Text style={style.temp}>Day {data.temp.day}&#176;C</Text>
+                    <Text style={style.temp}>Min {data.temp.min}&#176;C</Text>
+                    <Text style={style.temp}>Max {data.temp.max}&#176;C</Text>
                 </View>
             </View>
         )
@@ -39,7 +39,6 @@ const style = StyleSheet.create({
     },
     scrollView: {
         flex: 0.5,
-        //backgroundColor: '#5B9ED9',
         padding: 30
     },
     currentTempContainer: {
@@ -48,8 +47,6 @@ const style = StyleSheet.create({
         justifyContent:'center',
         alignItems: 'center',
         borderRadius: 10,
-        //borderColor: '#eee',
-        //borderWidth: 1,
         padding: 15
     },
     day: {
@@ -59,13 +56,13 @@ const style = StyleSheet.create({
         padding: 10,
         textAlign: 'center',
         borderRadius: 50,
-        fontWeight: '200',
+        fontWeight: '300',
         marginBottom: 15
     },
     temp: {
         fontSize: 16,
         color: 'white',
-        fontWeight: '100',
+        fontWeight: '300',
         textAlign: 'center'
     },
     otherContainer: {

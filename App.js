@@ -1,18 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState}from 'react';
-import { StyleSheet, Text, View, ImageBackground, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, ScrollView, Dimensions } from 'react-native';
 import * as Location from 'expo-location';
 
 
 import TempLocation from './components/TempLocation'
 import WeatherScroll from './components/WeatherScroll'
+import TempHourly from './components/TempHourly'
 import SearchBar from './components/SearchBar';
-const API_KEY ='49cc8c821cd2aff9af04c9f98c36eb74';
-const bg = require('./assets/bg.png')
+//import { haze, rain, snow, clear } from './assets/backgroundImages/index';
+
+const API_KEY ='5f975a6d7e66030d7d178be2567236fa';
+
 export default function App() {
 const [data, setData] = useState({});
 const [location, setLocation] = useState({});
 
+//const [bg, setBg] = useState({});
+//setBg(clear);
+var bg;
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -26,8 +32,6 @@ const [location, setLocation] = useState({});
       fetchDataFromApi(location.coords.latitude, location.coords.longitude);
       fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${location.coords.latitude}&longitude=${location.coords.longitude}&localityLanguage=vi`).then(
       res => res.json()).then(location => {
-
-      console.log(location.city)
       setLocation(location)
       })
 
@@ -64,25 +68,38 @@ const [location, setLocation] = useState({});
 
   const fetchDataFromApi = (latitude, longitude) => {
     if(latitude && longitude) {
-      fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&lang=vi&exclude=hourly,minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
-
+      fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&lang=vi&exclude=minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
       console.log(data)
+      console.log(data.hourly)
+    
       setData(data)
+      let main = data.current.weather[0].main;
+      
+      //console.log(main);
+      
+      //if(main == 'Clouds') bg = require('./assets/backgroundImages/img/haze.png');
+      /*if(main === 'Clear') setBg(clear);
+      if(main === 'Rain') setBg(rain);
+      //if(main === 'Haze') bg = require('./assets/backgroundImages/img/haze.jpg');*/
+
       })
     }
     
   }
 
   return (
-    
+    <ImageBackground source={bg} style={styles.background}>
       <ScrollView horizontal = {false} style={styles.container}>
+        
           <SearchBar fetchLocationFromCity={fetchLocationFromCity} />
           <TempLocation current={data.current} timezone={data.timezone} lat={data.lat} lon={data.lon} city = {location.city?location.city:location.name}/>
+          <TempHourly hourly = {data.hourly} timezone={data.timezone}></TempHourly>
           <WeatherScroll weatherData={data.daily}/>
-        {/*
-        <ImageBackground source={bg} style={styles.background} >
-        </ImageBackground>*/}
-      </ScrollView>
+          
+          {/*
+           >
+  */}
+      </ScrollView></ImageBackground>
   );
 }
 
@@ -92,10 +109,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#9AC1D9'
   },
-  /*background:{
-    flex:1, 
-    resizeMode:'repeat', 
-    justifyContent:"center",
-    backgroundColor:"red"
-  }*/
+  background:{
+    flex: 1,
+  }
 });
