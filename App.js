@@ -14,6 +14,7 @@ const API_KEY ='5f975a6d7e66030d7d178be2567236fa';
 
 export default function App() {
 const [data, setData] = useState({});
+const [airData, setAirData] = useState({});
 const [location, setLocation] = useState({});
 
 //const [bg, setBg] = useState({});
@@ -23,7 +24,7 @@ var bg;
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        fetchDataFromApi("40.7128", "-74.0060")
+        fetchDataFromApi("21.030653", "105.847130")
         return;
       }
 
@@ -60,7 +61,7 @@ var bg;
     return (
         <View style={styles.container}>
             <SearchBar fetchLocationFromCity={fetchLocationFromCity}/>
-            <Text style={styles.primaryText}>City Not Found! Try Different City</Text>
+            <Text style={styles.primaryText}>Không tìm thấy tỉnh/thành phố. Vui lòng nhập lại</Text>
         </View>
     )
   } 
@@ -70,18 +71,12 @@ var bg;
     if(latitude && longitude) {
       fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&lang=vi&exclude=minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
       console.log(data)
-      console.log(data.hourly)
-    
       setData(data)
-      let main = data.current.weather[0].main;
-      
-      //console.log(main);
-      
-      //if(main == 'Clouds') bg = require('./assets/backgroundImages/img/haze.png');
-      /*if(main === 'Clear') setBg(clear);
-      if(main === 'Rain') setBg(rain);
-      //if(main === 'Haze') bg = require('./assets/backgroundImages/img/haze.jpg');*/
-
+      })
+    
+      fetch(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`).then(res => res.json()).then(airData => {
+      //console.log(airData)
+      setAirData(airData)
       })
     }
     
@@ -92,14 +87,12 @@ var bg;
       <ScrollView horizontal = {false} style={styles.container}>
         
           <SearchBar fetchLocationFromCity={fetchLocationFromCity} />
-          <TempLocation current={data.current} timezone={data.timezone} lat={data.lat} lon={data.lon} city = {location.city?location.city:location.name}/>
+          <TempLocation current={data.current} timezone={data.timezone} city={location.city?location.city:location.name} air={airData.list}/>
           <TempHourly hourly = {data.hourly} timezone={data.timezone}></TempHourly>
           <WeatherScroll weatherData={data.daily}/>
           
-          {/*
-           >
-  */}
-      </ScrollView></ImageBackground>
+      </ScrollView>
+    </ImageBackground>
   );
 }
 

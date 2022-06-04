@@ -9,7 +9,7 @@ export default function SearchBar({ fetchLocationFromCity }) {
     return (
         <View style={styles.searchBar}>
             <TextInput 
-                placeholder='Enter City name'
+                placeholder='Nhập tên tỉnh/thành phố'
                 value={cityName}
                 onChangeText={(text) => setCityName(text)}
             />

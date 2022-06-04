@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import reactDom from 'react-dom';
+//import reactDom from 'react-dom';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import moment  from 'moment-timezone';
 
@@ -17,10 +17,9 @@ const WeatherItem = ({title, value, unit}) => {
     )
 }
 
-const TempLocation = ({current, timezone, lat, lon, city}) => {
+const TempLocation = ({current, timezone, city, air}) => {
     const [date, setDate] = useState('')
     const [time, setTime] = useState('')
-
     useEffect(() => {
         setInterval(() => {
             const time = new Date();
@@ -56,6 +55,23 @@ const TempLocation = ({current, timezone, lat, lon, city}) => {
                     <WeatherItem title="Mặt trời lặn" value={current? moment.tz(current.sunset * 1000, timezone).format('HH:mm'): ""} unit="pm"/>
                     <WeatherItem title="Tầm nhìn" value={current? current.visibility/1000: ""} unit="km"/>
                 </View>
+                <Text style = {style.header}>Chất lượng không khí </Text>
+                <Text style = {style.airDesc}>{air? air[0].main.aqi == 1? "Tốt":
+                            air[0].main.aqi == 2? "Trung Bình":
+                            air[0].main.aqi == 3? "Kém":
+                            air[0].main.aqi == 4? "Xấu":
+                            "Nguy Hại": ""}</Text>
+                <View style={style.weatherItemContainer}>
+                    <WeatherItem title="AQI index" value={air? air[0].main.aqi: ""} unit = ''/>
+                    <WeatherItem title="CO" value={air? air[0].components.co: ""} unit = 'μg/m3'/>
+                    <WeatherItem title="NO" value={air? air[0].components.no: ""} unit = 'μg/m3'/>
+                    <WeatherItem title="NO2" value={air? air[0].components.no2: ""} unit = 'μg/m3'/>
+                    <WeatherItem title="O3" value={air? air[0].components.o3: ""} unit = 'μg/m3'/>
+                    <WeatherItem title="SO2" value={air? air[0].components.so2: ""} unit = 'μg/m3'/>
+                    <WeatherItem title="PM2.5" value={air? air[0].components.pm2_5: ""} unit = 'μg/m3'/>
+                    <WeatherItem title="PM10" value={air? air[0].components.pm10: ""} unit = 'μg/m3'/>
+                    <WeatherItem title="NH3" value={air? air[0].components.nh3: ""} unit = 'μg/m3'/>
+                </View>
             </View>
             
         </View>
@@ -86,12 +102,6 @@ const style = StyleSheet.create({
         color: '#eee',
         fontWeight: '200'
     },
-    description: {
-        fontSize: 30,
-        textAlign: 'center',
-        color: '#eee',
-        fontWeight: '300'
-    },
     weatherItemContainer: {
         backgroundColor: '#5B9ED9',
         borderRadius: 20,
@@ -115,6 +125,18 @@ const style = StyleSheet.create({
     iconPressure: {
         width: 40,
         height: 40
+    },
+    header: {
+        fontSize: 20,
+        textAlign: 'center',
+        color: '#eee',
+        fontWeight: '300',
+        marginTop: 30,
+    },
+    airDesc: {
+        fontSize: 30,
+        color: '#eee',
+        textAlign: 'center',
     }
 })
 export default TempLocation

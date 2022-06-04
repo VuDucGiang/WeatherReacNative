@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import reactDom from 'react-dom';
+//import reactDom from 'react-dom';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import moment  from 'moment-timezone';
 
 
 const WeatherItem = ({title, value}) => {
+    /*let icon = '04d'
+    const img = {uri:'https://openweathermap.org/img/wn/' + icon + '@4x.png'}
+    <Image source={img} style={style.image}></Image>*/
     return (
         <View style={style.weatherItem}>
             <Text style={style.weatherItemTitle}> {title}h</Text>
-            <Text style={style.weatherItemValue}> {value}&#176;</Text>
+            
+            <Text style={style.weatherItemValue}> {value}&#176;C</Text>
         </View>
     )
 }
@@ -16,6 +20,7 @@ const WeatherItem = ({title, value}) => {
 const TempHourly = ({hourly, timezone}) => {
     return (
         <View style={style.container}>
+            <Text style = {style.header}>Dự báo thời tiết trong 12h tới</Text>
             <View style={style.weatherItemContainer}>
                 <WeatherItem title={hourly? moment.tz(hourly[1].dt * 1000, timezone).format('HH:mm'): ""} 
                          value={hourly? Math.round(hourly[1].temp): ""}/>
@@ -71,6 +76,17 @@ const style = StyleSheet.create({
         color:'#eee',
         fontSize:20,
         fontWeight: '300'
+    },
+    header: {
+        fontSize: 20,
+        textAlign: 'center',
+        color: '#eee',
+        fontWeight: '300'
+    },
+    image: {
+        width: 50,
+        height: 30,
+        marginLeft: 150,
     },
 })
 export default TempHourly
