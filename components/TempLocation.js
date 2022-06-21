@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-//import reactDom from 'react-dom';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import moment  from 'moment-timezone';
 

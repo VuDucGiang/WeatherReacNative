@@ -8,7 +8,6 @@ import TempLocation from './components/TempLocation'
 import WeatherScroll from './components/WeatherScroll'
 import TempHourly from './components/TempHourly'
 import SearchBar from './components/SearchBar';
-//import { haze, rain, snow, clear } from './assets/backgroundImages/index';
 
 const API_KEY ='5f975a6d7e66030d7d178be2567236fa';
 
@@ -17,8 +16,7 @@ const [data, setData] = useState({});
 const [airData, setAirData] = useState({});
 const [location, setLocation] = useState({});
 
-//const [bg, setBg] = useState({});
-//setBg(clear);
+
 var bg;
   useEffect(() => {
     (async () => {
@@ -70,7 +68,7 @@ var bg;
   const fetchDataFromApi = (latitude, longitude) => {
     if(latitude && longitude) {
       fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&lang=vi&exclude=minutely&units=metric&appid=${API_KEY}`).then(res => res.json()).then(data => {
-      console.log(data)
+      //console.log(data)
       setData(data)
       })
     
